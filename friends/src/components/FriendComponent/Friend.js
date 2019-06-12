@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from "@material-ui/core/Grid";
 import { Link } from 'react-router-dom'
+import IconButton from '@material-ui/core/IconButton';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const useStyles = makeStyles({
   card: {
@@ -27,12 +29,8 @@ const useStyles = makeStyles({
 
 const Friend = (props) => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
   return(
     <Grid item xs={4}>
-
-    
     <Card className={classes.card}>
       <CardContent>
         <Typography variant="h5" component="h2">
@@ -46,8 +44,10 @@ const Friend = (props) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" component={Link} to={`friends/${props.friend.id}/edit`}>Edit</Button>
-        <Button size="small">Delete</Button>
+        <Button size="small" /*component={Link} to={`friends/${props.friend.id}/edit`}*/>Edit</Button>
+        <IconButton aria-label="Share">
+          <DeleteForeverOutlinedIcon className={classes.icon} color="action"/>
+        </IconButton>
       </CardActions>
     </Card>
     </Grid>

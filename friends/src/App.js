@@ -6,6 +6,7 @@ import { ThemeProvider } from "styled-components";
 import theme from "./theme";
 import FriendList from "./components/FriendComponent"
 import axios from "axios";
+import Form from "./components/FormComponent"
 
 class App extends React.Component {
 
@@ -25,16 +26,25 @@ class App extends React.Component {
     .catch(err => console.log("Error", err));
   }
 
+  addNewFriendToState = (friend) =>
+  {
+    this.setState(prevState => {
+      return {
+        friendList: [...prevState.friendList, friend]
+      }
+    });
+  }
+
   render()
   {
     return (
       <ThemeProvider theme={theme}>
         <div className="App">
           <header className="App-header">
-            <Switch>
-              <Route exact path="/" render={props => <FriendList {...props} friendList={this.state.friendList}/>} />
-              {/* <Route path="/avenger/:id" component={AvengerDetail} /> */}
-            </Switch>
+              <Route path="/" render={props => (<> 
+              <FriendList {...props} friendList={this.state.friendList}/>
+              <Form {...props} addNewFriendToState={this.addNewFriendToState} />
+            </>) } />
           </header>
         </div>
       </ThemeProvider>
