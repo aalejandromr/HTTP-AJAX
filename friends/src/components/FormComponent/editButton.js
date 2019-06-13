@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const EditSection = props => {
   return (
-    <>
+    <StyledDiv>
       <Button
         className={props.className}
         variant="contained"
@@ -20,12 +20,14 @@ const EditSection = props => {
       >
         Cancel
       </Button>
-    </>
+    </StyledDiv>
   );
 };
 
-// const StyledButton = styled(Button)`
-//   margin: 5%;
-// `;
+const StyledDiv = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+`;
 
 export default EditSection;

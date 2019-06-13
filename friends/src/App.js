@@ -7,8 +7,10 @@ import theme from "./theme";
 import FriendList from "./components/FriendComponent";
 import axios from "axios";
 import Form from "./components/FormComponent";
+import Grid from '@material-ui/core/Grid';
+import styled from 'styled-components'
 
-class App extends React.Component {
+class StyledApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -114,8 +116,7 @@ class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <div className="App">
-          <header className="App-header">
+        <Grid className={this.props.className} container>
             <Route
               path="/"
               render={props => (
@@ -142,11 +143,18 @@ class App extends React.Component {
                 </>
               )}
             />
-          </header>
-        </div>
+        </Grid>
       </ThemeProvider>
     );
   }
 }
+
+const App = styled(StyledApp)`
+  display: flex;
+  padding: 5%;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+`
 
 export default App;

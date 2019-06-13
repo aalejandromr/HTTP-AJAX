@@ -8,8 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
+import EditIcon from "@material-ui/icons/Edit";
 import styled from "styled-components";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles({
   card: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
 const StyledFriend = props => {
   const classes = useStyles();
   return (
-    <Grid item xs={4} className={props.className}>
+    <Grid item xs={12} lg={3} md={4} className={props.className}>
       <Card className={classes.card}>
         <CardContent>
           <Typography variant="h5" component="h2">
@@ -45,19 +46,19 @@ const StyledFriend = props => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button
-            size="small" /*component={Link} to={`friends/${props.friend.id}/edit`}*/
+          <IconButton
             onClick={() => props.handleEditMode(props.friend)}
           >
-            Edit
-          </Button>
+            <EditIcon
+              color="primary"
+            />
+          </IconButton>
           <IconButton
             aria-label="Delete"
             onClick={() => props.handleDeleteFriend(props.friend.id)}
           >
-            <DeleteForeverOutlinedIcon
-              className={classes.icon}
-              color="action"
+            <DeleteIcon
+              color="error"
             />
           </IconButton>
         </CardActions>
