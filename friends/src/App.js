@@ -12,7 +12,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      friendList: []
+      friendList: [],
+      name: "",
+      email: "",
+      age: "",
+      editMode: false
     };
   }
 
@@ -23,12 +27,88 @@ class App extends React.Component {
       .catch(err => console.log("Error", err));
   }
 
-  addNewFriendToState = friend => {
-    this.setState(prevState => {
-      return {
-        friendList: [...prevState.friendList, friend]
-      };
+  deleteFriendToState = id => {
+    axios
+      .delete(`https://tmfse.sse.codesandbox.io/friends/${id}`)
+      .then(response => this.setState({ friendList: response.data }))
+      .catch(err => console.log(err));
+  };
+
+  handleEditMode = FriendtoEdit => {
+    this.setState({
+      editMode: true,
+      toEdit: FriendtoEdit.id,
+      name: FriendtoEdit.name,
+      age: FriendtoEdit.age,
+      email: FriendtoEdit.email
     });
+  };
+
+  handleResetEditMode = () => {
+    this.setState({
+      name: "",
+      age: "",
+      email: "",
+      editMode: false,
+      toEdit: null
+    });
+  };
+
+  handleChangeName = event => {
+    this.setState({ name: event.target.value });
+  };
+
+  handleChangeEmail = event => {
+    this.setState({ email: event.target.value });
+  };
+
+  handleChangeAge = event => {
+    this.setState({ age: event.target.value });
+  };
+
+  handleEditAddFriend = () => {
+    const newFriend = {
+      name: this.state.name,
+      age: this.state.age,
+      email: this.state.email
+    };
+    if (!this.state.editMode) {
+      axios
+        .post("https://tmfse.sse.codesandbox.io/friends", newFriend)
+        .then(response => {
+          // setName("");
+          // setEmail("");
+          // setAge("");
+          this.setState({
+            name: "",
+            age: "",
+            email: ""
+          });
+          this.setState({ friendList: response.data });
+        })
+        .catch(err => {
+          console.log(err);
+          // this.setState({
+          //   error: err.response.message
+          // });
+        });
+    } else {
+      axios
+        .put(
+          `https://tmfse.sse.codesandbox.io/friends/${this.state.toEdit}`,
+          newFriend
+        )
+        .then(response => {
+          this.handleResetEditMode();
+          this.setState({ friendList: response.data });
+        })
+        .catch(err => {
+          console.log(err);
+          // this.setState({
+          //   error: err.response.message
+          // });
+        });
+    }
   };
 
   render() {
@@ -42,9 +122,22 @@ class App extends React.Component {
                 <>
                   <Form
                     {...props}
+                    name={this.state.name}
+                    email={this.state.email}
+                    age={this.state.age}
                     addNewFriendToState={this.addNewFriendToState}
+                    handleChangeName={this.handleChangeName}
+                    handleChangeEmail={this.handleChangeEmail}
+                    handleChangeAge={this.handleChangeAge}
+                    handleOnSubmit={this.handleEditAddFriend}
+                    editMode={this.state.editMode}
                   />
-                  <FriendList {...props} friendList={this.state.friendList} />
+                  <FriendList
+                    {...props}
+                    friendList={this.state.friendList}
+                    handleDeleteFriend={this.deleteFriendToState}
+                    handleEditMode={this.handleEditMode}
+                  />
                 </>
               )}
             />

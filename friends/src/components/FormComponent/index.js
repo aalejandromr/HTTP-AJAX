@@ -18,39 +18,9 @@ export default function Form(props) {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const handleChangeName = event => {
-    setName(event.target.value);
-  };
-
-  const handleChangeEmail = event => {
-    setEmail(event.target.value);
-  };
-
-  const handleChangeAge = event => {
-    setAge(event.target.value);
-  };
-
   const handleOnSubmit = event => {
     event.preventDefault();
-    const newFriend = {
-      name: name,
-      email: email,
-      age: age
-    };
-    axios
-      .post("https://tmfse.sse.codesandbox.io/friends", newFriend)
-      .then(result => {
-        setName("");
-        setEmail("");
-        setAge("");
-        props.addNewFriendToState(newFriend);
-      })
-      .catch(err => {
-        console.log(err);
-        // this.setState({
-        //   error: err.response.message
-        // });
-      });
+    props.handleOnSubmit();
   };
 
   return (
@@ -58,8 +28,8 @@ export default function Form(props) {
       <TextField
         id="name"
         label="name"
-        value={name}
-        onChange={handleChangeName}
+        value={props.name}
+        onChange={props.handleChangeName}
         margin="normal"
         variant="outlined"
       />
@@ -67,8 +37,8 @@ export default function Form(props) {
       <TextField
         id="email"
         label="email"
-        value={email}
-        onChange={handleChangeEmail}
+        value={props.email}
+        onChange={props.handleChangeEmail}
         margin="normal"
         variant="outlined"
         type="email"
@@ -77,14 +47,14 @@ export default function Form(props) {
       <TextField
         id="email"
         label="age"
-        value={age}
-        onChange={handleChangeAge}
+        value={props.age}
+        onChange={props.handleChangeAge}
         margin="normal"
         variant="outlined"
         type="number"
       />
       <Button variant="contained" color="primary" type="Submit">
-        Send
+        {props.editMode ? "Edit" : "Add"}
       </Button>
     </StyledForm>
   );

@@ -47,10 +47,14 @@ const StyledFriend = props => {
         <CardActions>
           <Button
             size="small" /*component={Link} to={`friends/${props.friend.id}/edit`}*/
+            onClick={() => props.handleEditMode(props.friend)}
           >
             Edit
           </Button>
-          <IconButton aria-label="Share">
+          <IconButton
+            aria-label="Delete"
+            onClick={() => props.handleDeleteFriend(props.friend.id)}
+          >
             <DeleteForeverOutlinedIcon
               className={classes.icon}
               color="action"
