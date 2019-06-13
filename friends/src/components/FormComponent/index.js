@@ -1,8 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import styled from "styled-components";
+import AddEditButton from "./addEditButton";
+import AddButton from "./addButton";
+import EditButton from "./editButton";
 
 export default function Form(props) {
   const [values, setValues] = React.useState({
@@ -10,9 +13,7 @@ export default function Form(props) {
     email: "",
     age: ""
   });
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [age, setAge] = React.useState("");
+  const ComponentFromAddEditButton = AddEditButton(AddButton)(EditButton);
 
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
@@ -53,9 +54,10 @@ export default function Form(props) {
         variant="outlined"
         type="number"
       />
-      <Button variant="contained" color="primary" type="Submit">
-        {props.editMode ? "Edit" : "Add"}
-      </Button>
+      <ComponentFromAddEditButton
+        editMode={props.editMode}
+        handleResetEditMode={props.handleResetEditMode}
+      />
     </StyledForm>
   );
 }

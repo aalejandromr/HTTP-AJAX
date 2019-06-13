@@ -130,6 +130,7 @@ class App extends React.Component {
                     handleChangeEmail={this.handleChangeEmail}
                     handleChangeAge={this.handleChangeAge}
                     handleOnSubmit={this.handleEditAddFriend}
+                    handleResetEditMode={this.handleResetEditMode}
                     editMode={this.state.editMode}
                   />
                   <FriendList
