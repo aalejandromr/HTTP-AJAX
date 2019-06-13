@@ -1,34 +1,34 @@
-import React from 'react'
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import axios from 'axios'
+import React from "react";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import axios from "axios";
+import styled from "styled-components";
 
 export default function Form(props) {
   const [values, setValues] = React.useState({
     name: "",
     email: "",
     age: ""
-  })
-  const [name, setName] = React.useState("")
-  const [email, setEmail] = React.useState("")
-  const [age, setAge] = React.useState("")
+  });
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [age, setAge] = React.useState("");
 
   const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value});
-  }
-  
+    setValues({ ...values, [name]: event.target.value });
+  };
 
   const handleChangeName = event => {
-    setName(event.target.value)
-  }
+    setName(event.target.value);
+  };
 
   const handleChangeEmail = event => {
-    setEmail(event.target.value)
-  }
+    setEmail(event.target.value);
+  };
 
   const handleChangeAge = event => {
-    setAge(event.target.value)
-  }
+    setAge(event.target.value);
+  };
 
   const handleOnSubmit = event => {
     event.preventDefault();
@@ -36,9 +36,9 @@ export default function Form(props) {
       name: name,
       email: email,
       age: age
-    }
+    };
     axios
-      .post("http://localhost:5000/friends", newFriend)
+      .post("https://tmfse.sse.codesandbox.io/friends", newFriend)
       .then(result => {
         setName("");
         setEmail("");
@@ -51,10 +51,10 @@ export default function Form(props) {
         //   error: err.response.message
         // });
       });
-  }
+  };
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <StyledForm onSubmit={handleOnSubmit}>
       <TextField
         id="name"
         label="name"
@@ -86,6 +86,12 @@ export default function Form(props) {
       <Button variant="contained" color="primary" type="Submit">
         Send
       </Button>
-    </form>
-  )
+    </StyledForm>
+  );
 }
+
+const StyledForm = styled.form`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
