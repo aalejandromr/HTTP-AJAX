@@ -5,22 +5,21 @@ import styled from "styled-components";
 const EditSection = props => {
   return (
     <>
-      <StyledButton
+      <Button
         className={props.className}
         variant="contained"
         color="primary"
         type="Submit"
       >
         Edit
-      </StyledButton>
-      <StyledButton
+      </Button>
+      <Button
         variant="contained"
         color="primary"
         onClick={props.handleResetEditMode}
-        className={props.className}
       >
         Cancel
-      </StyledButton>
+      </Button>
     </>
   );
 };
