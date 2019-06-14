@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import styled from "styled-components";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles({
   card: {
@@ -29,10 +29,19 @@ const useStyles = makeStyles({
   }
 });
 
-const StyledFriend = props => {
+const Friend = props => {
   const classes = useStyles();
+  //const element = React.createRef();
+  const [hide, setHide] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      // setHide(true);
+    };
+  }, []);
+
   return (
-    <Grid item xs={12} lg={3} md={4} className={props.className}>
+    <StyledGrid item xs={12} lg={3} md={4} hide={hide}>
       <Card className={classes.card}>
         <CardContent>
           <Typography variant="h5" component="h2">
@@ -46,29 +55,31 @@ const StyledFriend = props => {
           </Typography>
         </CardContent>
         <CardActions>
-          <IconButton
-            onClick={() => props.handleEditMode(props.friend)}
-          >
-            <EditIcon
-              color="primary"
-            />
+          <IconButton onClick={() => props.handleEditMode(props.friend)}>
+            <EditIcon color="primary" />
           </IconButton>
           <IconButton
             aria-label="Delete"
-            onClick={() => props.handleDeleteFriend(props.friend.id)}
+            onClick={() => {
+              setHide(true);
+              props.handleDeleteFriend(props.friend.id);
+            }}
           >
-            <DeleteIcon
-              color="error"
-            />
+            <DeleteIcon color="error" />
           </IconButton>
         </CardActions>
       </Card>
-    </Grid>
+    </StyledGrid>
   );
 };
 
-const Friend = styled(StyledFriend)`
-  ${props => props.theme.animation.show}
-  ${props => props.theme.animation.xAxis}
+const StyledGrid = styled(Grid)`
+  ${props => {
+    if (!props.hide) {
+      return [props.theme.animation.show, props.theme.animation.xAxis];
+    } else {
+      return [props.theme.animation.hideXAxis, props.theme.animation.hide];
+    }
+  }}
 `;
 export default Friend;
