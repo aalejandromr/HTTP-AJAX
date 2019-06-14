@@ -77,8 +77,6 @@ const StyledGrid = styled(Grid)`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 5% 0%;
-  box-sizing: border-box;
   @media screen and (max-width: 1000px) {
     flex-direction: column;
   }
